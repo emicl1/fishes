@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
      * Setup memory mapping which provides access to the peripheral
      * registers region of RGB LEDs, knobs and line of yellow LEDs.
      */
-    mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
+    mem_base =(unsigned char*) map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
 
     /* If mapping fails exit with error code */
     if (mem_base == NULL)
