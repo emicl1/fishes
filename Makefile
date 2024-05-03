@@ -9,7 +9,7 @@ LDFLAGS += -static
 LDLIBS += -lrt -lpthread
 #LDLIBS += -lm
 
-SOURCES = bigger_fish.cpp mzapo_phys.cpp mzapo_parlcd.cpp serialize_lock.cpp
+SOURCES = bigger_fish.cpp mzapo_phys.cpp mzapo_parlcd.cpp serialize_lock.cpp draw_helper.cpp gameScreen.cpp
 #SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = bigger_fish
 TARGET_IP ?= 192.168.223.219
