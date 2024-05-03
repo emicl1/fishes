@@ -12,12 +12,12 @@ LDLIBS += -lrt -lpthread
 SOURCES = bigger_fish.cpp mzapo_phys.cpp mzapo_parlcd.cpp serialize_lock.cpp
 #SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = bigger_fish
-TARGET_IP ?= 192.168.223.106
+TARGET_IP ?= 192.168.223.219
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
 $(warning Run as "TARGET_IP=192.168.202.163 make run" or modify Makefile)
-TARGET_IP ?= 192.168.223.106
+TARGET_IP ?= 192.168.223.219
 endif
 endif
 TARGET_DIR ?= /tmp/$(shell whoami)
