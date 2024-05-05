@@ -16,6 +16,7 @@
 #include "mzapo_regs.h"
 
 #include "font_types.h"
+#include "fish_models.h"
 //#include "font_prop14x16.cpp"
 
 #ifndef FISHES_DRAW_HELPER_H
@@ -28,6 +29,10 @@ void draw_pixel_scaled(int x, int y, int scale, unsigned short color);
 int char_width(font_descriptor_t *fdes, int ch);
 
 void draw_char(int x, int y, font_descriptor_t *fdes, char ch, uint16_t color, int text_scale);
+
+void draw_fish_model(int x, int y, fish_model_descriptor_t *fmdes, int fish_index, uint16_t color, int text_scale);
+
+void draw_fish(int x, int y, uint16_t color);
 
 
 #endif //FISHES_DRAW_HELPER_H

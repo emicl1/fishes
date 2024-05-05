@@ -9,6 +9,7 @@
 
 
 #include "draw_helper.h"
+#include "bigger_fish.h"
 
 
 #define X_VECTOR 5
@@ -17,21 +18,6 @@
 
 extern unsigned short *fb;
 
-void keep_on_display_x(int* x_coord){
-    if (*x_coord > 0){
-        *x_coord = (*x_coord) % 480;
-    }else {
-        *x_coord = (*x_coord) + 480;
-    }
-}
-
-void keep_on_display_y(int* y_coord){
-    if (*y_coord > 0){
-        *y_coord = (*y_coord) % 320;
-    }else {
-        *y_coord = (*y_coord) + 320;
-    }
-}
 
 
 int GameScreen() {
@@ -41,7 +27,7 @@ int GameScreen() {
     unsigned int c;
     fb  = (unsigned short *)malloc(320*480*2);
 
-    printf("Hello world\n");
+    printf("Starting with the fish!\n");
 
     parlcd_mem_base = (unsigned char*) map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
     if (parlcd_mem_base == NULL)
@@ -77,7 +63,8 @@ int GameScreen() {
 
         // Exit the loop if you click a button
         if ((r&0x1000000)!=0) {
-            break;
+
+            exit(0);
         }
         r = *(volatile uint32_t*)(mem_base + SPILED_REG_KNOBS_8BIT_o);
         int right_knob_val = (r&0xff);
@@ -90,16 +77,16 @@ int GameScreen() {
             y_vector = 0;
         }
 
-        if (right_knob_val >= 0 && right_knob_val < 16 || right_knob_val >= 64 && right_knob_val < 80 ||
-        right_knob_val >= 128 && right_knob_val < 144 ||right_knob_val >= 192 && right_knob_val < 208){
+        if ((right_knob_val >= 0 && right_knob_val < 16) || (right_knob_val >= 64 && right_knob_val < 80) ||
+        (right_knob_val >= 128 && right_knob_val < 144) || (right_knob_val >= 192 && right_knob_val < 208)){
             if (x_vector > 0){
                 x_vector *= -1;
             }
             if (y_vector > 0) {
                 y_vector *= -1;
             }
-        }else if (right_knob_val >= 16 && right_knob_val < 32 || right_knob_val >= 80 && right_knob_val < 96 ||
-        right_knob_val >= 144 && right_knob_val < 160 ||right_knob_val >= 208 && right_knob_val < 224) {
+        }else if ((right_knob_val >= 16 && right_knob_val < 32) || (right_knob_val >= 80 && right_knob_val < 96) ||
+                (right_knob_val >= 144 && right_knob_val < 160) || (right_knob_val >= 208 && right_knob_val < 224)) {
             if (x_vector > 0){
                 x_vector *= 1;
             }else{
@@ -108,8 +95,8 @@ int GameScreen() {
             if (y_vector > 0) {
                 y_vector *= -1;
             }
-        }else if (right_knob_val >= 32 && right_knob_val < 48 || right_knob_val >= 96 && right_knob_val < 112 ||
-        right_knob_val >= 160 && right_knob_val < 176 ||right_knob_val >= 224 && right_knob_val < 240) {
+        }else if ((right_knob_val >= 32 && right_knob_val < 48) || (right_knob_val >= 96 && right_knob_val < 112) ||
+                (right_knob_val >= 160 && right_knob_val < 176) || (right_knob_val >= 224 && right_knob_val < 240)) {
             if (x_vector > 0){
                 x_vector *= 1;
             }else{
@@ -120,8 +107,8 @@ int GameScreen() {
             }else{
                 y_vector *= -1;
             }
-        }else if (right_knob_val >= 48 && right_knob_val < 64 || right_knob_val >= 112 && right_knob_val < 128 ||
-        right_knob_val >= 176 && right_knob_val < 192 ||right_knob_val >= 240 && right_knob_val < 256) {
+        }else if ((right_knob_val >= 48 && right_knob_val < 64) || (right_knob_val >= 112 && right_knob_val < 128) ||
+                (right_knob_val >= 176 && right_knob_val < 192) || (right_knob_val >= 240 && right_knob_val < 256)) {
             if (x_vector > 0){
                 x_vector *= -1;
             }
@@ -138,6 +125,8 @@ int GameScreen() {
         for (ptr = 0; ptr < 320*480 ; ptr++) {
             fb[ptr]=0u;
         }
+        draw_fish_model(x_coordinate, y_coordinate, &fish_models, 0, 10000, 4);
+        /*
         for (j=0; j<WIDTH_OF_FISH; j++) {
             for (i=0; i<HEIGHT_OF_FISH; i++) {
                 int final_x_coord = i + x_coordinate;
@@ -149,6 +138,7 @@ int GameScreen() {
                 draw_pixel(final_x_coord, final_y_coord, 0x7ff);
             }
         }
+        */
 
         parlcd_write_cmd(parlcd_mem_base, 0x2c);
         for (ptr = 0; ptr < 480*320 ; ptr+=2) {

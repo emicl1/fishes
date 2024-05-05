@@ -15,6 +15,7 @@
 //#include "font_types.h"
 
 #include "gameScreen.h"
+#include "fish_models.h"
 
 #define TEXT_SCALE 4
 
@@ -25,7 +26,6 @@ void redraw_main_menu(unsigned char *mem_base, unsigned char *parlcd_mem_base, c
     int i,j;
     int ptr;
     unsigned int c;
-    fb = (unsigned short *)malloc(320*480*2);
     if (menuoption == 0) {
         ptr = 0;
         for (i = 0; i < 320; i++) {
@@ -103,6 +103,7 @@ void black_screen(unsigned char *parlcd_mem_base){
 int main(int argc, char *argv[])
 {
     printf("Hello world\n");
+    fb = (unsigned short *)malloc(320*480*2);
     unsigned char *mem_base;
     unsigned char *parlcd_mem_base;
     mem_base = (unsigned  char *)map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
@@ -116,25 +117,32 @@ int main(int argc, char *argv[])
     parlcd_hx8357_init(parlcd_mem_base);
 
     parlcd_write_cmd(parlcd_mem_base, 0x2c);
+    printf("We at least got here\n");
 
     redraw_main_menu(mem_base, parlcd_mem_base, 0, 10000);
      bool previous = false;
+
      while (1){
         int r = *(volatile uint32_t*)(mem_base + SPILED_REG_KNOBS_8BIT_o);
         int left_knob_val = ((r>>16)&0xff);
+         //draw_pixel_scaled(50, 50, 30, 10000);
+         draw_fish_model(20, 20, &fish_models, 0, 10000, TEXT_SCALE);
 
+         // if we are at exit, we break with black screen
         if ((!previous) && ((r&0x4000000)!=0)){
             black_screen(parlcd_mem_base);
+            exit(0);
             break;
         }
-
-         if (previous && ((r&0x4000000)!=0)){
-             GameScreen();
-         }
+        // if we press new game, we start the game
+        if (previous && ((r&0x4000000)!=0)){
+            GameScreen();
+        }
 
         if ((left_knob_val % 32) < 16){
             if (!previous){
                 redraw_main_menu(mem_base, parlcd_mem_base,1, 50000);
+
             }
             previous = true;
         }else if ((left_knob_val % 32) >= 16){
@@ -144,6 +152,8 @@ int main(int argc, char *argv[])
             previous = false;
         }
     }
+
+
     printf("Goodbye world\n");
     return 0;
 }

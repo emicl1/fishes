@@ -8299,6 +8299,7 @@ static font_bits_t winFreeSystem14x16_bits[] = {
 0x3000,
 0x6000,
 
+
 };
 
 #if 0000
@@ -8533,7 +8534,7 @@ static uint32_t winFreeSystem14x16_offset[] = {
 
 /* Character width data. */
 static unsigned char winFreeSystem14x16_width[] = {
-  4,	 /*   (0x20) */
+   4,	 /*   (0x20) */
   4,	 /* ! (0x21) */
   6,	 /* " (0x22) */
   8,	 /* # (0x23) */
