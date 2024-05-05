@@ -44,15 +44,15 @@ static fish_model_bits_t fish_model_bits[] = {
 };
 
 static uint32_t fish_model_offset[] = {
-        0
+        4
 };
 
 static unsigned char fish_models_width[] = {
-    32
+    16
 };
 
 static unsigned char fish_models_height[] = {
-        16
+        7
 };
 
 
@@ -63,26 +63,6 @@ fish_model_descriptor_t fish_models = {
         fish_models_width,
         fish_models_height
 };
-
-/* Character Custom Shape:
-   ht=7, width=16
-   +----------------+
-   |                |
-   |*               |
-   |**   *********  |
-   |*** ************|
-   |****************|
-   |*** ************|
-   |**   *********  |
-   |*               |
-   +----------------+ */
-//0x8000,  // Row 0: 1000 0000 0000 0000
-//0xc1f8,  // Row 1: 1100 0001 1111 1000
-//0xe3fc,  // Row 2: 1110 0011 1111 1100
-//0xffff,  // Row 3: 1111 1111 1111 1111
-//0xe3fc,  // Row 4: 1110 0011 1111 1100
-//0xc1f8,  // Row 5: 1100 0001 1111 1000
-//0x8000   // Row 6: 1000 0000 0000 0000
 
 
 

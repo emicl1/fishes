@@ -17,7 +17,7 @@ unsigned short* fb;
 void keep_on_display_x(int* x_coord){
     if (*x_coord > 480){
         *x_coord = (*x_coord) - 480;
-    }else {
+    }else if (*x_coord < 0){
         *x_coord = (*x_coord) + 480;
     }
 }
@@ -25,8 +25,8 @@ void keep_on_display_x(int* x_coord){
 void keep_on_display_y(int* y_coord){
     if (*y_coord > 320){
         *y_coord = (*y_coord) - 320;
-    }else {
-        *y_coord = (*y_coord) + 320;
+    }else if (*y_coord < 0) {
+        *y_coord = (*y_coord)  + 320;
     }
 }
 
@@ -46,12 +46,16 @@ void draw_pixel_scaled(int x, int y, int scale, unsigned short color)
     {
         for (int j = 0; j < scale; j++)
         {
+
             int final_x_coord = i + x;
             int final_y_coord = j + y;
             keep_on_display_x(&final_x_coord);
+            //printf("before y: %d\n", final_y_coord);
             keep_on_display_y(&final_y_coord);
+            //printf("after y: %d\n", final_y_coord);
+
             draw_pixel(final_x_coord, final_y_coord, color);
-        }
+       }
     }
 }
 
@@ -99,9 +103,6 @@ void draw_fish_model(int x, int y, fish_model_descriptor_t *fmdes, int fish_inde
         fish_model_bits_t cur_bit = *char_ptr;
         for (int col = 0; col < w; col++) {
             if ((cur_bit & 0x80000000) != 0) {
-                //printf("Drawing scaled pixel at : %d %d", x + col,y + row );
-
-
                 draw_pixel_scaled(x + col * text_scale, y + row * text_scale, text_scale, color);
             }
             cur_bit <<= 1;
@@ -110,4 +111,18 @@ void draw_fish_model(int x, int y, fish_model_descriptor_t *fmdes, int fish_inde
     }
 }
 
-
+void draw_fish_model_flipped(int x, int y, fish_model_descriptor_t *fmdes, int fish_index, uint16_t color, int text_scale) {
+    int w = fmdes->widths[fish_index];
+    const fish_model_bits_t *char_ptr;
+    char_ptr = &fmdes->bits[fmdes->offset[fish_index]]; // Adjusted indexing
+    for (int row = fmdes->heights[fish_index]; row > 0; row--) {
+        fish_model_bits_t cur_bit = *char_ptr;
+        for (int col = w; col > 0; col--) {
+            if ((cur_bit & 0x80000000) != 0) {
+                draw_pixel_scaled(x + col * text_scale, y + row * text_scale, text_scale, color);
+            }
+            cur_bit <<= 1;
+        }
+        char_ptr++; // Move to the next row
+    }
+}

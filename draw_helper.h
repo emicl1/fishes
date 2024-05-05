@@ -34,5 +34,7 @@ void draw_fish_model(int x, int y, fish_model_descriptor_t *fmdes, int fish_inde
 
 void draw_fish(int x, int y, uint16_t color);
 
+void draw_fish_model_flipped(int x, int y, fish_model_descriptor_t *fmdes, int fish_index, uint16_t color, int text_scale);
+
 
 #endif //FISHES_DRAW_HELPER_H

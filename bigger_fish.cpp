@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
     printf("We at least got here\n");
 
     redraw_main_menu(mem_base, parlcd_mem_base, 0, 10000);
-     bool previous = false;
+    bool previous = false;
 
      while (1){
         int r = *(volatile uint32_t*)(mem_base + SPILED_REG_KNOBS_8BIT_o);
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
         }
         // if we press new game, we start the game
         if (previous && ((r&0x4000000)!=0)){
-            GameScreen();
+            GameScreen(parlcd_mem_base, mem_base);
         }
 
         if ((left_knob_val % 32) < 16){
@@ -153,7 +153,6 @@ int main(int argc, char *argv[])
         }
     }
 
-
-    printf("Goodbye world\n");
-    return 0;
+     printf("Goodbye world\n");
+     return 0;
 }
