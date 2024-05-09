@@ -4,6 +4,7 @@
 #include "Fish.h"
 
 
+
 Fish::Fish(int x, int y, int scale, uint16_t color, int fish_index)
         : x(x), y(y), scale(scale), color(color), fish_index(fish_index) {}
 

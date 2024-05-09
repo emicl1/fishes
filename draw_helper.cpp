@@ -5,28 +5,26 @@
 #include <stdint.h>
 #include <cstdio>
 
+#include "macros.h"
 #include "font_types.h"
 #include "font_prop14x16.cpp"
-#include "fish_bitman.h"
 #include "fish_models.h"
-
-#define TEXT_SCALE 4
 
 unsigned short* fb;
 
 void keep_on_display_x(int* x_coord){
-    if (*x_coord > 480){
-        *x_coord = (*x_coord) - 480;
+    if (*x_coord > LCD_WIDTH){
+        *x_coord = (*x_coord) - LCD_WIDTH;
     }else if (*x_coord < 0){
-        *x_coord = (*x_coord) + 480;
+        *x_coord = (*x_coord) + LCD_WIDTH;
     }
 }
 
 void keep_on_display_y(int* y_coord){
-    if (*y_coord > 320){
-        *y_coord = (*y_coord) - 320;
+    if (*y_coord > LCD_HEIGHT){
+        *y_coord = (*y_coord) - LCD_HEIGHT;
     }else if (*y_coord < 0) {
-        *y_coord = (*y_coord)  + 320;
+        *y_coord = (*y_coord)  + LCD_HEIGHT;
     }
 }
 

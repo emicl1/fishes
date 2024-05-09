@@ -29,17 +29,17 @@ public:
 
     void moveAllFishes();
 
-    Fish collsionDetection(Player player);
+    Fish collsionDetection(Player *player);
 
     void removeFish(Fish fish);
 
     bool doRectanglesOverlap(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
 
-    bool whoIsEaten(Player player);
+    bool whoIsEaten(Player *player);
 
     bool isPointInArea(int x, int y, int x1, int y1, int width, int height);
 
-    bool whoIsBigger(Player player);
+    bool whoIsBigger(Player *player);
 
 
 };

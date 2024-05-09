@@ -7,6 +7,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "macros.h"
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
@@ -25,14 +26,10 @@ void redraw_main_menu(unsigned char *mem_base, unsigned char *parlcd_mem_base, c
     font_descriptor_t* fdes = &font_winFreeSystem14x16;
     int i,j;
     int ptr;
-    unsigned int c;
     if (menuoption == 0) {
-        ptr = 0;
-        for (i = 0; i < 320; i++) {
-            for (j = 0; j < 480; j++) {
-                c = 0;
-                fb[ptr] = c;
-                parlcd_write_data(parlcd_mem_base, fb[ptr++]);
+        for (i = 0; i < LCD_HEIGHT/2; i++) { // half the width, because we are writing 2x
+            for (j = 0; j < LCD_WIDTH; j++) {
+                parlcd_write_data2x(parlcd_mem_base, 0);
             }
         }
     }
@@ -48,7 +45,7 @@ void redraw_main_menu(unsigned char *mem_base, unsigned char *parlcd_mem_base, c
         color2 = color;
     }
     int x = 100;
-    int y = 60;
+    int y = 80;
     char str[] = "Fish Game";
     char *ch = str;
     for (i = 0; i < 10; i++) {
@@ -77,7 +74,7 @@ void redraw_main_menu(unsigned char *mem_base, unsigned char *parlcd_mem_base, c
         ch2++;
     }
 
-    for (ptr = 0; ptr < 480*320 ; ptr+=2)
+    for (ptr = 0; ptr < LCD_WIDTH*LCD_HEIGHT ; ptr+=2)
     {
         uint32_t value_to_write = 0;
         value_to_write |= fb[ptr];
@@ -90,8 +87,8 @@ void redraw_main_menu(unsigned char *mem_base, unsigned char *parlcd_mem_base, c
 
 void black_screen(unsigned char *parlcd_mem_base){
     int ptr = 0;
-    for (int i = 0; i < 320; i++) {
-        for (int j = 0; j < 480; j++) {
+    for (int i = 0; i < LCD_HEIGHT; i++) {
+        for (int j = 0; j < LCD_WIDTH; j++) {
             int c = 0;
             fb[ptr] = c;
             parlcd_write_data(parlcd_mem_base, fb[ptr++]);
@@ -103,7 +100,7 @@ void black_screen(unsigned char *parlcd_mem_base){
 int main(int argc, char *argv[])
 {
     printf("Hello world\n");
-    fb = (unsigned short *)malloc(320*480*2);
+    fb = (unsigned short *)malloc(320*LCD_WIDTH*2);
     unsigned char *mem_base;
     unsigned char *parlcd_mem_base;
     mem_base = (unsigned  char *)map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
@@ -137,6 +134,8 @@ int main(int argc, char *argv[])
         // if we press new game, we start the game
         if (previous && ((r&0x4000000)!=0)){
             GameScreen(parlcd_mem_base, mem_base);
+            black_screen(parlcd_mem_base);
+            redraw_main_menu(mem_base, parlcd_mem_base, 0, 10000);
         }
 
         if ((left_knob_val % 32) < 16){

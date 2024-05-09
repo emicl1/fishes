@@ -84,8 +84,8 @@ bigger_fish.o: bigger_fish.cpp \
  /usr/arm-linux-gnueabihf/include/bits/getopt_core.h \
  /usr/arm-linux-gnueabihf/include/bits/unistd.h \
  /usr/arm-linux-gnueabihf/include/bits/unistd_ext.h \
- /usr/arm-linux-gnueabihf/include/linux/close_range.h mzapo_parlcd.h \
- mzapo_phys.h mzapo_regs.h draw_helper.h \
+ /usr/arm-linux-gnueabihf/include/linux/close_range.h macros.h \
+ mzapo_parlcd.h mzapo_phys.h mzapo_regs.h draw_helper.h \
  /usr/arm-linux-gnueabihf/include/termios.h \
  /usr/arm-linux-gnueabihf/include/bits/termios.h \
  /usr/arm-linux-gnueabihf/include/bits/termios-struct.h \
@@ -273,25 +273,6 @@ serialize_lock.o: serialize_lock.cpp \
  /usr/arm-linux-gnueabihf/include/bits/wchar.h \
  /usr/arm-linux-gnueabihf/include/bits/stdint-intn.h \
  /usr/arm-linux-gnueabihf/include/bits/stdint-uintn.h
-fish_bitman.o: fish_bitman.cpp \
- /usr/arm-linux-gnueabihf/include/stdc-predef.h fish_bitman.h \
- /usr/lib/gcc-cross/arm-linux-gnueabihf/11/include/stdint.h \
- /usr/arm-linux-gnueabihf/include/stdint.h \
- /usr/arm-linux-gnueabihf/include/bits/libc-header-start.h \
- /usr/arm-linux-gnueabihf/include/features.h \
- /usr/arm-linux-gnueabihf/include/features-time64.h \
- /usr/arm-linux-gnueabihf/include/bits/wordsize.h \
- /usr/arm-linux-gnueabihf/include/bits/timesize.h \
- /usr/arm-linux-gnueabihf/include/sys/cdefs.h \
- /usr/arm-linux-gnueabihf/include/bits/long-double.h \
- /usr/arm-linux-gnueabihf/include/gnu/stubs.h \
- /usr/arm-linux-gnueabihf/include/gnu/stubs-hard.h \
- /usr/arm-linux-gnueabihf/include/bits/types.h \
- /usr/arm-linux-gnueabihf/include/bits/typesizes.h \
- /usr/arm-linux-gnueabihf/include/bits/time64.h \
- /usr/arm-linux-gnueabihf/include/bits/wchar.h \
- /usr/arm-linux-gnueabihf/include/bits/stdint-intn.h \
- /usr/arm-linux-gnueabihf/include/bits/stdint-uintn.h
 draw_helper.o: draw_helper.cpp \
  /usr/arm-linux-gnueabihf/include/stdc-predef.h \
  /usr/lib/gcc-cross/arm-linux-gnueabihf/11/include/stdint.h \
@@ -329,8 +310,8 @@ draw_helper.o: draw_helper.cpp \
  /usr/arm-linux-gnueabihf/include/bits/floatn.h \
  /usr/arm-linux-gnueabihf/include/bits/floatn-common.h \
  /usr/arm-linux-gnueabihf/include/bits/stdio.h \
- /usr/arm-linux-gnueabihf/include/bits/stdio2.h font_types.h \
- font_prop14x16.cpp fish_bitman.h fish_models.h
+ /usr/arm-linux-gnueabihf/include/bits/stdio2.h macros.h font_types.h \
+ font_prop14x16.cpp fish_models.h
 gameScreen.o: gameScreen.cpp \
  /usr/arm-linux-gnueabihf/include/stdc-predef.h \
  /usr/arm-linux-gnueabihf/include/c++/11/stdlib.h \
@@ -502,9 +483,9 @@ gameScreen.o: gameScreen.cpp \
  /usr/arm-linux-gnueabihf/include/asm/errno.h \
  /usr/arm-linux-gnueabihf/include/asm-generic/errno.h \
  /usr/arm-linux-gnueabihf/include/asm-generic/errno-base.h \
- /usr/arm-linux-gnueabihf/include/bits/types/error_t.h draw_helper.h \
- mzapo_parlcd.h mzapo_phys.h mzapo_regs.h font_types.h fish_models.h \
- bigger_fish.h FishManager.h Player.h Fish.h \
+ /usr/arm-linux-gnueabihf/include/bits/types/error_t.h macros.h \
+ draw_helper.h mzapo_parlcd.h mzapo_phys.h mzapo_regs.h font_types.h \
+ fish_models.h bigger_fish.h FishManager.h Player.h Fish.h \
  /usr/arm-linux-gnueabihf/include/c++/11/iostream \
  /usr/arm-linux-gnueabihf/include/c++/11/ostream \
  /usr/arm-linux-gnueabihf/include/c++/11/ios \
@@ -1035,7 +1016,7 @@ FishManager.o: FishManager.cpp \
  /usr/arm-linux-gnueabihf/include/c++/11/arm-linux-gnueabihf/bits/opt_random.h \
  /usr/arm-linux-gnueabihf/include/c++/11/bits/random.tcc \
  /usr/arm-linux-gnueabihf/include/c++/11/numeric \
- /usr/arm-linux-gnueabihf/include/c++/11/bits/stl_numeric.h
+ /usr/arm-linux-gnueabihf/include/c++/11/bits/stl_numeric.h macros.h
 Player.o: Player.cpp /usr/arm-linux-gnueabihf/include/stdc-predef.h \
  Player.h Fish.h /usr/arm-linux-gnueabihf/include/c++/11/iostream \
  /usr/arm-linux-gnueabihf/include/c++/11/arm-linux-gnueabihf/bits/c++config.h \
@@ -1240,4 +1221,4 @@ Player.o: Player.cpp /usr/arm-linux-gnueabihf/include/stdc-predef.h \
  /usr/arm-linux-gnueabihf/include/bits/termios-tcflow.h \
  /usr/arm-linux-gnueabihf/include/bits/termios-misc.h \
  /usr/arm-linux-gnueabihf/include/sys/ttydefaults.h mzapo_parlcd.h \
- mzapo_phys.h mzapo_regs.h font_types.h fish_models.h
+ mzapo_phys.h mzapo_regs.h font_types.h fish_models.h macros.h

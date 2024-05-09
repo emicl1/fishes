@@ -2,13 +2,15 @@
 // Created by alex on 5.5.24.
 //
 
+
 #include "Player.h"
+#include "macros.h"
 
 
-Player::Player(int x, int y, int scale, uint16_t color, int fish_index, int score, int lives, int speed, int vector[2]) : Fish(x, y, scale, color, fish_index) {
+
+Player::Player(int x, int y, int scale, uint16_t color, int fish_index, int score, int lives, int vector[2]) : Fish(x, y, scale, color, fish_index) {
     this->score = score;
     this->lives = lives;
-    this->speed = speed;
     this->vector[0] = vector[0];
     this->vector[1] = vector[1];
 }
@@ -70,8 +72,12 @@ void Player::handle_movement(int knob_values) {
     this->x += this->vector[0];
     this->y += this->vector[1];
 
-    this->x%=480;
-    this->y%=320;
+
+    this->x%=LCD_WIDTH;
+    this->y%=LCD_HEIGHT;
+
+    this->x < 0 ? this->x += LCD_WIDTH : this->x = this->x;
+    this->y < 0 ? this->y += LCD_HEIGHT : this->y = this->y;
 }
 
 void Player::draw(bool IsFlipped) {
@@ -85,4 +91,30 @@ int Player::getX() {
 
 int Player::getY() {
     return this->y;
+}
+
+void Player::setScore(int score) {
+    printf("Setting score to %d\n", this->score);
+    this->score = score;
+    printf("Score set to %d\n", this->score);
+}
+
+void Player::setScale(int scale) {
+    this->scale = scale;
+}
+
+int Player::getScore() {
+    return this->score;
+}
+
+int Player::getScale() {
+    return this->scale;
+}
+
+bool Player::getHasBoost() {
+    return this->hasBoost;
+}
+
+void Player::setHasBoost(bool hasBoost) {
+    this->hasBoost = hasBoost;
 }

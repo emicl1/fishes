@@ -1,7 +1,9 @@
 #include "FishManager.h"  // Include the header file instead of redefining the class
+#include "macros.h"
+
 
 FishManager::FishManager()
-        : dist_x(0, 480), dist_y(0, 320), dist_scale(1, 7), dist_direction(0, 1){
+        : dist_x(0, LCD_WIDTH), dist_y(0, 320), dist_scale(1, 7), dist_direction(0, 1){
     std::random_device rd;
     rng.seed(rd());
 }
@@ -14,11 +16,12 @@ void FishManager::spawnFish() {
     int fish_index = 0; // Assuming only one type of fish for simplicity
     // add fish to random vector of shies facing right or left
     int direction = dist_direction(rng);
-
     if (direction == 0) {
         fishes_facing_right.push_back(Fish(x, y, scale, color, fish_index));
+
     } else {
         fishes_facing_left.push_back(Fish(x, y, scale, color, fish_index));
+
     }
 
 }
@@ -37,7 +40,7 @@ void FishManager::moveAllFishesRight() {
     for (Fish &fish : fishes_facing_right) {
         // Move the fish
         fish.x += 5;
-        if (fish.x > 480) {
+        if (fish.x > LCD_WIDTH) {
             fish.x = 0;
         }
     }
@@ -48,7 +51,7 @@ void FishManager::moveAllFishesLeft() {
         // Move the fish
         fish.x -= 5;
         if (fish.x < 0) {
-            fish.x = 480;
+            fish.x = LCD_WIDTH;
         }
     }
 }
@@ -58,27 +61,28 @@ void FishManager::moveAllFishes() {
     moveAllFishesLeft();
 }
 
-Fish FishManager::collsionDetection(Player player) {
+Fish FishManager::collsionDetection(Player *player) {
     // Check for collision with player
     for (Fish &fish : fishes_facing_right) {
+
         if (doRectanglesOverlap(fish.x, fish.y,((int) fish_models.widths[fish.fish_index] )* fish.scale,
-                                  ((int) fish_models.heights[fish.fish_index] )* fish.scale, player.x, player.y,
-                                  ((int) fish_models.widths[player.fish_index] )* player.scale,
-                                  ((int) fish_models.heights[player.fish_index] )* player.scale)) {
+                                  ((int) fish_models.heights[fish.fish_index] )* fish.scale, player->x, player->y,
+                                  ((int) fish_models.widths[player->fish_index] )* player->scale,
+                                  ((int) fish_models.heights[player->fish_index] )* player->scale)) {
             printf("Collision detected\n");
             return fish;
         }
     }
     for (Fish &fish : fishes_facing_left) {
         if (doRectanglesOverlap(fish.x, fish.y,((int) fish_models.widths[fish.fish_index] )* fish.scale,
-                                  ((int) fish_models.heights[fish.fish_index] )* fish.scale, player.x, player.y,
-                                  ((int) fish_models.widths[player.fish_index] )* player.scale,
-                                  ((int) fish_models.heights[player.fish_index] )* player.scale)){
+                                  ((int) fish_models.heights[fish.fish_index] )* fish.scale, player->x, player->y,
+                                  ((int) fish_models.widths[player->fish_index] )* player->scale,
+                                  ((int) fish_models.heights[player->fish_index] )* player->scale)){
             printf("Collision detected\n");
             return fish;
         }
     }
-    return Fish(-1, -1, -1, 0, -1); // No collision
+    return {-1, -1, -5, 0, -1}; // No collision
 }
 
 
@@ -105,7 +109,7 @@ bool FishManager::doRectanglesOverlap(int x1, int y1, int width1, int height1, i
     return false;
 }
 
-bool FishManager::whoIsEaten(Player player){
+bool FishManager::whoIsEaten(Player *player){
     if (whoIsBigger(player)){
         return true;
     }
@@ -113,31 +117,37 @@ bool FishManager::whoIsEaten(Player player){
 }
 
 void FishManager::removeFish(Fish fish) {
-    if (fish.fish_index != -1) {
+    if (fish.scale != -5) {
+        printf("Removing fish\n");
         for (int i = 0; i < fishes_facing_right.size(); i++) {
             if (fishes_facing_right[i].x == fish.x && fishes_facing_right[i].y == fish.y) {
                 fishes_facing_right.erase(fishes_facing_right.begin() + i);
-                return;
             }
         }
         for (int i = 0; i < fishes_facing_left.size(); i++) {
             if (fishes_facing_left[i].x == fish.x && fishes_facing_left[i].y == fish.y) {
                 fishes_facing_left.erase(fishes_facing_left.begin() + i);
-                return;
+
             }
         }
     }
 }
 
 
-bool FishManager::whoIsBigger(Player player){
-    Fish eatenFish = collsionDetection(player);
-    if (eatenFish.fish_index != -1){
-        if (player.scale > eatenFish.scale){
-            removeFish(eatenFish);
-            player.score += 1;
-            return true;
-        }
+bool FishManager::whoIsBigger(Player *player){
+
+    // fishes don't disappear when eaten
+    Fish fishInQuestion = collsionDetection(player);
+    if (fishInQuestion.scale == -5){
+        return true;
+    }else if (player->scale >= fishInQuestion.scale){
+        printf("Player scale: %d\n", player->getScale());
+        printf("Fish scale: %d\n", fishInQuestion.scale);
+        removeFish(fishInQuestion);
+        player->setScore(player->getScore() + 1);
+        player->setScale(player->getScale() + 1);
+        printf("Player score: %d\n", player->score);
+        return true;
     }
     return false;
 }

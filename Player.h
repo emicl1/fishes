@@ -12,10 +12,10 @@ class Player : public Fish {
 public:
     int score;
     int lives;
-    int speed;
     int vector[2];
+    bool hasBoost = false;
 
-    Player(int x, int y, int scale, uint16_t color, int fish_index, int score, int lives, int speed, int vector[2]);
+    Player(int x, int y, int scale, uint16_t color, int fish_index, int score, int lives, int vector[2]);
 
 
     void draw(bool IsFlipped = false);
@@ -39,8 +39,15 @@ public:
 
     void setLives(int lives);
 
+    void setScale(int scale);
 
+    int getScale();
 
+    int getScore();
+
+    bool getHasBoost();
+
+    void setHasBoost(bool hasBoost);
 };
 
 
