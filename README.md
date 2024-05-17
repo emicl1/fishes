@@ -24,6 +24,6 @@ For comprehensive details on gameplay mechanics, controls, and tips, please refe
 ## Technical details
 - The game is developed in c++
 - Documentation
- - It is available in the Documentation folder
- - It is in plain HTML
- - It was created with the programme Doxygen
+	- It is available in the Documentation folder
+	- It is in plain HTML
+	- It was created with the programme Doxygen
