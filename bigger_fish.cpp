@@ -12,13 +12,8 @@
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
 #include "draw_helper.h"
-
-//#include "font_types.h"
-
 #include "gameScreen.h"
 #include "fish_models.h"
-
-#define TEXT_SCALE 4
 
 extern unsigned short *fb;
 
@@ -67,6 +62,7 @@ void redraw_main_menu(unsigned char *parlcd_mem_base, char menuoption, u_int16_t
     y = 180;
     char str2[]="Exit";
     char *ch2=str2;
+
     for (i=0; i<5; i++)
     {
         draw_char(x, y, fdes, *ch2, color2, TEXT_SCALE /2);
@@ -122,7 +118,6 @@ int main(int argc, char *argv[])
      while (1){
         int r = *(volatile uint32_t*)(mem_base + SPILED_REG_KNOBS_8BIT_o);
         int left_knob_val = ((r>>16)&0xff);
-         //draw_pixel_scaled(50, 50, 30, 10000);
          draw_fish_model(20, 20, &fish_models, 0, 10000, TEXT_SCALE);
 
          // if we are at exit, we break with black screen
@@ -134,16 +129,18 @@ int main(int argc, char *argv[])
         // if we press new game, we start the game
         if (previous && ((r&0x4000000)!=0)){
             GameScreen(parlcd_mem_base, mem_base);
+            // after the game screen ends, we want to black out the screen and go back to the main menu
             black_screen(parlcd_mem_base);
             redraw_main_menu(parlcd_mem_base, 0, 10000);
         }
-
+        // Currently selected "New game"
         if ((left_knob_val % 32) < 16){
             if (!previous){
                 redraw_main_menu(parlcd_mem_base,1, 50000);
 
             }
             previous = true;
+        // Currently selected "Exit"
         }else if ((left_knob_val % 32) >= 16){
             if (previous){
                 redraw_main_menu(parlcd_mem_base,2, 50000);

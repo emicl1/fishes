@@ -44,14 +44,10 @@ void draw_pixel_scaled(int x, int y, int scale, unsigned short color)
     {
         for (int j = 0; j < scale; j++)
         {
-
             int final_x_coord = i + x;
             int final_y_coord = j + y;
             keep_on_display_x(&final_x_coord);
-            //printf("before y: %d\n", final_y_coord);
             keep_on_display_y(&final_y_coord);
-            //printf("after y: %d\n", final_y_coord);
-
             draw_pixel(final_x_coord, final_y_coord, color);
        }
     }

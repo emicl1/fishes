@@ -16,7 +16,6 @@ Player::Player(int x, int y, int scale, uint16_t color, int fish_index, int scor
 }
 
 void Player::handle_movement(int knob_values) {
-    //printf("Handling player movement\n");
     int right_knob_val = (knob_values&0xff);
     int mid_knob_val = ((knob_values>>8)&0xff);
     //change the speed of the fish
@@ -26,7 +25,8 @@ void Player::handle_movement(int knob_values) {
         this->vector[0] = 0;
         this->vector[1] = 0;
     }
-
+    // Repetative code in the condition is needed, because we had to separate the values of the knob to more than 4 sections,
+    // because otherwise the game was quite unplayable
     if ((right_knob_val >= 0 && right_knob_val < 16) || (right_knob_val >= 64 && right_knob_val < 80) ||
         (right_knob_val >= 128 && right_knob_val < 144) || (right_knob_val >= 192 && right_knob_val < 208)){
         if (this->vector[0] > 0){
@@ -68,10 +68,8 @@ void Player::handle_movement(int knob_values) {
             this->vector[1] *= -1;
         }
     }
-
     this->x += this->vector[0];
     this->y += this->vector[1];
-
 
     this->x%=LCD_WIDTH;
     this->y%=LCD_HEIGHT;
@@ -81,7 +79,6 @@ void Player::handle_movement(int knob_values) {
 }
 
 void Player::draw(bool IsFlipped) {
-    //printf("Drawing player\n");
     this->vector[0] > 0 ? draw_fish_model(this->x, this->y, &fish_models, this->fish_index, this->color, this->scale) : draw_fish_model_flipped(this->x, this->y, &fish_models, this->fish_index, this->color, this->scale);
 }
 

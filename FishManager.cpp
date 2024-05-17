@@ -14,20 +14,17 @@ void FishManager::spawnFish() {
     int scale = dist_scale(rng);
     uint16_t color = 0xFFFF; // White, for example; customize as needed
     int fish_index = 0; // Assuming only one type of fish for simplicity
-    // add fish to random vector of shies facing right or left
+    // add fish to random vector if it is facing right or left
     int direction = dist_direction(rng);
     if (direction == 0) {
         fishes_facing_right.push_back(Fish(x, y, scale, color, fish_index));
 
     } else {
         fishes_facing_left.push_back(Fish(x, y, scale, color, fish_index));
-
     }
-
 }
 
 void FishManager::drawAllFishes() {
-
     for (Fish &fish : fishes_facing_right) {
         fish.draw();
     }
@@ -64,7 +61,6 @@ void FishManager::moveAllFishes() {
 Fish FishManager::collsionDetection(Player *player) {
     // Check for collision with player
     for (Fish &fish : fishes_facing_right) {
-
         if (doRectanglesOverlap(fish.x, fish.y,((int) fish_models.widths[fish.fish_index] )* fish.scale,
                                   ((int) fish_models.heights[fish.fish_index] )* fish.scale, player->x, player->y,
                                   ((int) fish_models.widths[player->fish_index] )* player->scale,
@@ -127,7 +123,6 @@ void FishManager::removeFish(Fish fish) {
         for (int i = 0; i < fishes_facing_left.size(); i++) {
             if (fishes_facing_left[i].x == fish.x && fishes_facing_left[i].y == fish.y) {
                 fishes_facing_left.erase(fishes_facing_left.begin() + i);
-
             }
         }
     }

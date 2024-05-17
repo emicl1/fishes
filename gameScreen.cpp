@@ -102,13 +102,11 @@ int GameScreen(unsigned char *parlcd_mem_base, unsigned char *mem_base) {
             parlcd_write_data2x(parlcd_mem_base, 0);
         }
     }
-
     struct timespec loop_delay;
     loop_delay.tv_sec = 0;
     loop_delay.tv_nsec = 150 * 1000 * 1000;
 
     int r = *(volatile uint32_t*)(mem_base + SPILED_REG_KNOBS_8BIT_o);
-
 
     random_device rd;
     mt19937 rng(rd());
@@ -117,16 +115,12 @@ int GameScreen(unsigned char *parlcd_mem_base, unsigned char *mem_base) {
     auto lastSpawnTime = chrono::steady_clock::now();
 
     int stateTime = 0;
-
-
     while (1) {
-
         // Exit the loop if you click a button
         if ((r&0x1000000)!=0) {
             exit(0);
         }
         r = *(volatile uint32_t*)(mem_base + SPILED_REG_KNOBS_8BIT_o);
-
 
         auto currentTime = std::chrono::steady_clock::now();
         std::chrono::duration<float> elapsed = currentTime - lastSpawnTime;
@@ -136,7 +130,6 @@ int GameScreen(unsigned char *parlcd_mem_base, unsigned char *mem_base) {
             manager.spawnFish();  // Spawn a new fish
             lastSpawnTime = currentTime;  // Reset the last spawn time
         }
-
         uint32_t ledReg = *(volatile uint32_t*)(mem_base + SPILED_REG_LED_RGB1_o);
 
         if (player.getHasBoost()){
@@ -156,10 +149,8 @@ int GameScreen(unsigned char *parlcd_mem_base, unsigned char *mem_base) {
             player.setHasBoost(true);
         }
 
-
         manager.moveAllFishes();
         player.handle_movement(r);
-
         if (!manager.whoIsEaten(&player)) {
             printf("Player was eaten\n");
             show_lose_screen(parlcd_mem_base);
@@ -171,7 +162,6 @@ int GameScreen(unsigned char *parlcd_mem_base, unsigned char *mem_base) {
             show_win_screen(parlcd_mem_base);
             break;
         }
-
         // Clear the screen
         for (ptr = 0; ptr < LCD_HEIGHT*LCD_WIDTH ; ptr++) {
             fb[ptr]=0u;
@@ -180,7 +170,6 @@ int GameScreen(unsigned char *parlcd_mem_base, unsigned char *mem_base) {
         manager.drawAllFishes();
         // Draw the player
         player.draw();
-
 
         parlcd_write_cmd(parlcd_mem_base, 0x2c);
         for (ptr = 0; ptr < LCD_WIDTH*LCD_HEIGHT ; ptr+=2) {
