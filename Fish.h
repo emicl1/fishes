@@ -18,6 +18,21 @@ public:
     uint16_t color;      // Color of the fish
     int fish_index;      // Index to select different fish models if available
 
+    /**
+     * Create a new Fish object.
+     * @brief
+     * Constructor.
+     * @param x
+     * The x coordinate of the fish
+     * @param y
+     * The y coordinate of the fish
+     * @param scale
+     * The scale of the fish
+     * @param color
+     * The color of the fish
+     * @param fish_index
+     * Index of the fish in our fish models. Determines the shape of the fish
+     */
     Fish(int x, int y, int scale, uint16_t color, int fish_index);
 
     void draw(bool IsFlipped = false);

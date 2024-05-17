@@ -22,12 +22,12 @@
 
 extern unsigned short *fb;
 
-void redraw_main_menu(unsigned char *mem_base, unsigned char *parlcd_mem_base, char menuoption, u_int16_t color){
+void redraw_main_menu(unsigned char *parlcd_mem_base, char menuoption, u_int16_t color){
     font_descriptor_t* fdes = &font_winFreeSystem14x16;
     int i,j;
     int ptr;
     if (menuoption == 0) {
-        for (i = 0; i < LCD_HEIGHT/2; i++) { // half the width, because we are writing 2x
+        for (i = 0; i < LCD_HEIGHT/2; i++) { // half the height, because we are writing 2x
             for (j = 0; j < LCD_WIDTH; j++) {
                 parlcd_write_data2x(parlcd_mem_base, 0);
             }
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
     parlcd_write_cmd(parlcd_mem_base, 0x2c);
     printf("We at least got here\n");
 
-    redraw_main_menu(mem_base, parlcd_mem_base, 0, 10000);
+    redraw_main_menu(parlcd_mem_base, 0, 10000);
     bool previous = false;
 
      while (1){
@@ -135,18 +135,18 @@ int main(int argc, char *argv[])
         if (previous && ((r&0x4000000)!=0)){
             GameScreen(parlcd_mem_base, mem_base);
             black_screen(parlcd_mem_base);
-            redraw_main_menu(mem_base, parlcd_mem_base, 0, 10000);
+            redraw_main_menu(parlcd_mem_base, 0, 10000);
         }
 
         if ((left_knob_val % 32) < 16){
             if (!previous){
-                redraw_main_menu(mem_base, parlcd_mem_base,1, 50000);
+                redraw_main_menu(parlcd_mem_base,1, 50000);
 
             }
             previous = true;
         }else if ((left_knob_val % 32) >= 16){
             if (previous){
-                redraw_main_menu(mem_base, parlcd_mem_base,2, 50000);
+                redraw_main_menu(parlcd_mem_base,2, 50000);
             }
             previous = false;
         }

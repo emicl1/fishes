@@ -135,8 +135,6 @@ void FishManager::removeFish(Fish fish) {
 
 
 bool FishManager::whoIsBigger(Player *player){
-
-    // fishes don't disappear when eaten
     Fish fishInQuestion = collsionDetection(player);
     if (fishInQuestion.scale == -5){
         return true;
