@@ -19,7 +19,7 @@ You suddenly appeared in a fishes skin and you happily spent your life inside an
 - Petr Bureš
 
 ## User Manual
-For comprehensive details on gameplay mechanics, controls, and tips, please refer to the [User Manual](Fish-Game-manual.pdf).
+For comprehensive details on launching the game, gameplay mechanics, controls, and tips, please refer to the [User Manual](Fish-Game-manual.pdf).
 
 ## Technical details
 - The game is developed in c++

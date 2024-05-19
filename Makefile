@@ -12,11 +12,13 @@ LDLIBS += -lrt -lpthread
 SOURCES = bigger_fish.cpp mzapo_phys.cpp mzapo_parlcd.cpp serialize_lock.cpp draw_helper.cpp gameScreen.cpp fish_models.cpp Fish.cpp FishManager.cpp Player.cpp
 #SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = bigger_fish
+#YOUR IP
 TARGET_IP ?= 192.168.223.141
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
 $(warning Run as "TARGET_IP=192.168.202.163 make run" or modify Makefile)
+#YOUR IP
 TARGET_IP ?= 192.168.223.141
 endif
 endif
@@ -25,7 +27,9 @@ TARGET_USER ?= root
 # for use from Eduroam network use TARGET_IP=localhost and enable next line
 #SSH_OPTIONS=-o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "Port=2222"
 #SSH_GDB_TUNNEL_REQUIRED=y
+#YOUR SSH KEY DIRECTORY
 SSH_OPTIONS+=-i ~/.ssh/mzapo-root-key
+#YOUR CTU ID
 SSH_OPTIONS+=-o 'ProxyJump=michaal4@postel.felk.cvut.cz'
 
 OBJECTS += $(filter %.o,$(SOURCES:%.c=%.o))
