@@ -27,3 +27,4 @@ For comprehensive details on gameplay mechanics, controls, and tips, please refe
 	- It is available in the Documentation folder
 	- It is in plain HTML
 	- It was created with the programme Doxygen
+- For information about the interaction between files, please refer to the [Interaction diagram](Interaction_diagram.jpeg)
