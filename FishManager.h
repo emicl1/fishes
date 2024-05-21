@@ -148,6 +148,7 @@ public:
     */
     bool whoIsBigger(Player *player);
 
+    bool playerInDanger(Player *player);
 
 };
 

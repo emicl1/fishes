@@ -172,9 +172,36 @@ bool FishManager::whoIsBigger(Player *player)
         printf("Fish scale: %d\n", fishInQuestion.scale);
         removeFish(fishInQuestion);
         player->setScore(player->getScore() + 1);
-        player->setScale(player->getScale() + 1);
+        if (player->getScore() % 4 == 0){
+            player->setScale(player->getScale() + 1);
+        }
         printf("Player score: %d\n", player->score);
         return true;
     }
     return false;
 }
+
+bool FishManager::playerInDanger(Player *player){
+
+    for (Fish &fish : fishes_facing_right) {
+
+        if (doRectanglesOverlap(fish.x, fish.y,((int) fish_models.widths[fish.fish_index] )* fish.scale,
+                                ((int) fish_models.heights[fish.fish_index] )* fish.scale, player->x - 2 * (fish_models.widths[player->fish_index]), player->y - 2 * (fish_models.widths[player->fish_index]),
+                                ((int) fish_models.widths[player->fish_index] )* (player->scale + 4),
+                                ((int) fish_models.heights[player->fish_index] )* (player->scale + 4))) {
+            printf("Player in danger right\n");
+            return true;
+        }
+    }
+    for (Fish &fish : fishes_facing_left) {
+        if (doRectanglesOverlap(fish.x, fish.y,((int) fish_models.widths[fish.fish_index] )* fish.scale,
+                                ((int) fish_models.heights[fish.fish_index] )* fish.scale, player->x - 2 * (fish_models.widths[player->fish_index]), player->y - 2 * (fish_models.widths[player->fish_index]),
+                                ((int) fish_models.widths[player->fish_index] )* (player->scale + 4),
+                                ((int) fish_models.heights[player->fish_index] )* (player->scale + 4))) {
+            printf("Player in danger left\n");
+            return true;
+        }
+    }
+    return false; // No collision
+}
+

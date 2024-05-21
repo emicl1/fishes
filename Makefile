@@ -13,13 +13,13 @@ SOURCES = bigger_fish.cpp mzapo_phys.cpp mzapo_parlcd.cpp serialize_lock.cpp dra
 #SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = bigger_fish
 #YOUR IP
-TARGET_IP ?= 192.168.223.141
+TARGET_IP ?= 192.168.223.148
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
 $(warning Run as "TARGET_IP=192.168.202.163 make run" or modify Makefile)
 #YOUR IP
-TARGET_IP ?= 192.168.223.141
+TARGET_IP ?= 192.168.223.148
 endif
 endif
 TARGET_DIR ?= /tmp/$(shell whoami)
@@ -30,7 +30,7 @@ TARGET_USER ?= root
 #YOUR SSH KEY DIRECTORY
 SSH_OPTIONS+=-i ~/.ssh/mzapo-root-key
 #YOUR CTU ID
-SSH_OPTIONS+=-o 'ProxyJump=michaal4@postel.felk.cvut.cz'
+SSH_OPTIONS+=-o 'ProxyJump=buresp13@postel.felk.cvut.cz'
 
 OBJECTS += $(filter %.o,$(SOURCES:%.c=%.o))
 OBJECTS += $(filter %.o,$(SOURCES:%.cpp=%.o))

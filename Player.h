@@ -65,8 +65,6 @@ public:
 
     int getY();
 
-    void setVector(int x, int y);
-
     void setSpeed(int speed);
 
     void setScore(int score);
@@ -82,6 +80,12 @@ public:
     bool getHasBoost();
 
     void setHasBoost(bool hasBoost);
+
+    void setVector(int x, int y);
+
+    //getter for vector
+    int getYVector();
+
 };
 
 

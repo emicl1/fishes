@@ -80,6 +80,8 @@
 
 #define COLOR_888_GREEN RGB_888(0, 255, 0)
 #define COLOR_888_RED RGB_888(255, 0, 0)
+#define COLOR_888_BLUE RGB_888(0, 0, 255)
+#define COLOR_888_ORANGE RGB_888(255, 165, 0)
 
 
 #endif //MACROS_H
